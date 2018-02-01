@@ -79,3 +79,5 @@ testdata.forEach(function(dataset) {
 
   console.log('');
 });
+
+console.log(JSON.stringify(feiertage.asList()));
