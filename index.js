@@ -21,6 +21,35 @@ FeiertageJS.prototype.GaussianEaster = function() {
   return [3, Ostern];
 };
 
+FeiertageJS.prototype.setYear = function(newYear) {
+  if (typeof newYear == 'number' && newYear > 1583 && newYear < 8202) {
+    this.year = newYear;
+  }
+};
+
+FeiertageJS.prototype.asList = function() {
+  return {
+    Neujahr: this.Neujahr(),
+    HeiligeDreiKoenige: this.HeiligeDreiKoenige(),
+    Karfreitag: this.Karfreitag(),
+    Ostersonntag: this.Ostersonntag(),
+    Ostermontag: this.Ostermontag(),
+    TagDerArbeit: this.TagDerArbeit(),
+    ChristiHimmelfahrt: this.ChristiHimmelfahrt(),
+    Pfingstsonntag: this.Pfingstsonntag(),
+    Pfingstmontag: this.Pfingstmontag(),
+    Fronleichnam: this.Fronleichnam(),
+    MariaHimmelfahrt: this.MariaHimmelfahrt(),
+    TagDerDeutschenEinheit: this.TagDerDeutschenEinheit(),
+    Reformationstag: this.Reformationstag(),
+    Allerheiligen: this.Allerheiligen(),
+    Heiligeabend: this.Heiligeabend(),
+    ErsterWeihnachtsfeiertag: this.ErsterWeihnachtsfeiertag(),
+    ZweiterWeihnachtsfeiertag: this.ZweiterWeihnachtsfeiertag(),
+    Silvester: this.Silvester()
+  };
+};
+
 FeiertageJS.prototype.Neujahr = function() {
   return this.createDate(1, 1);
 };
@@ -108,12 +137,6 @@ FeiertageJS.prototype.ZweiterWeihnachtsfeiertag = function() {
 
 FeiertageJS.prototype.Silvester = function() {
   return this.createDate(12, 31);
-};
-
-FeiertageJS.prototype.setYear = function(newYear) {
-  if (typeof newYear == 'number' && newYear > 1583 && newYear < 8202) {
-    this.year = newYear;
-  }
 };
 
 module.exports = new FeiertageJS();
