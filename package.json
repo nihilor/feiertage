@@ -12,7 +12,7 @@
     "url": "git+https://github.com/nihilor/feiertagejs.git"
   },
   "keywords": ["Feiertage", "Deutschland", "public", "holidays", "calendar"],
-  "author": "Mark Lubkowitz",
+  "author": "Mark Lubkowitz (https://github.com/nihilor/)",
   "license": "MIT",
   "bugs": {
     "url": "https://github.com/nihilor/feiertagejs/issues"
