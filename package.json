@@ -1,6 +1,6 @@
 {
-  "name": "feiertagejs",
-  "version": "1.0.0",
+  "name": "feiertage",
+  "version": "1.0.1",
   "description":
     "Tiny, simple and pure module to calculate the german non-business days.",
   "main": "index.js",

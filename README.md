@@ -7,7 +7,7 @@ Tiny, simple and pure module to calculate the german non-business days.
 Simply download or install the package and import the module.
 
 ```js
-var feiertage = require('./index');
+var feiertage = require('feiertage');
 feiertage.asList();
 feiertage.Neujahr();
 ```
