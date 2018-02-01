@@ -41,7 +41,6 @@ testdata.push({
   }
 });
 
-feiertage.setYear(2020);
 testdata.push({
   validation: {
     Neujahr: toDate(2020, 1, 1),
@@ -51,11 +50,11 @@ testdata.push({
     BußUndBettag: toDate(2020, 11, 18)
   },
   test: {
-    Neujahr: feiertage.Neujahr(),
-    HeiligeDreiKoenige: feiertage.HeiligeDreiKoenige(),
-    Ostersonntag: feiertage.Ostersonntag(),
-    Pfingstsonntag: feiertage.Pfingstsonntag(),
-    BußUndBettag: feiertage.BußUndBettag()
+    Neujahr: feiertage.Neujahr(2020),
+    HeiligeDreiKoenige: feiertage.HeiligeDreiKoenige(2020),
+    Ostersonntag: feiertage.Ostersonntag(2020),
+    Pfingstsonntag: feiertage.Pfingstsonntag(2020),
+    BußUndBettag: feiertage.BußUndBettag(2020)
   }
 });
 
@@ -80,4 +79,4 @@ testdata.forEach(function(dataset) {
   console.log('');
 });
 
-console.log(JSON.stringify(feiertage.asList()));
+console.log(JSON.stringify(feiertage.asList(2021)));

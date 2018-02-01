@@ -1,6 +1,6 @@
 {
   "name": "feiertage",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "description":
     "Tiny, simple and pure module to calculate the german non-business days.",
   "main": "index.js",
@@ -9,13 +9,13 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/nihilor/feiertagejs.git"
+    "url": "git+https://github.com/nihilor/feiertage.git"
   },
   "keywords": ["Feiertage", "Deutschland", "public", "holidays", "calendar"],
   "author": "Mark Lubkowitz (https://github.com/nihilor/)",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/nihilor/feiertagejs/issues"
+    "url": "https://github.com/nihilor/feiertage/issues"
   },
-  "homepage": "https://github.com/nihilor/feiertagejs#readme"
+  "homepage": "https://github.com/nihilor/feiertage#readme"
 }
