@@ -10,34 +10,33 @@ testdata.push({
   validation: {
     Neujahr: toDate(2018, 1, 1),
     HeiligeDreiKoenige: toDate(2018, 1, 6),
-    Ostersonntag: toDate(2018, 4, 1),
-    Pfingstsonntag: toDate(2018, 5, 20),
+    Ostermontag: toDate(2018, 4, 2),
+    Pfingstmontag: toDate(2018, 5, 21),
     BußUndBettag: toDate(2018, 11, 21)
   },
   test: {
     Neujahr: feiertage.Neujahr(),
     HeiligeDreiKoenige: feiertage.HeiligeDreiKoenige(),
-    Ostersonntag: feiertage.Ostersonntag(),
-    Pfingstsonntag: feiertage.Pfingstsonntag(),
+    Ostermontag: feiertage.Ostermontag(),
+    Pfingstmontag: feiertage.Pfingstmontag(),
     BußUndBettag: feiertage.BußUndBettag()
   }
 });
 
-feiertage.setYear(2019);
 testdata.push({
   validation: {
     Neujahr: toDate(2019, 1, 1),
     HeiligeDreiKoenige: toDate(2019, 1, 6),
-    Ostersonntag: toDate(2019, 4, 21),
-    Pfingstsonntag: toDate(2019, 6, 9),
+    Ostermontag: toDate(2019, 4, 22),
+    Pfingstmontag: toDate(2019, 6, 10),
     BußUndBettag: toDate(2019, 11, 20)
   },
   test: {
-    Neujahr: feiertage.Neujahr(),
-    HeiligeDreiKoenige: feiertage.HeiligeDreiKoenige(),
-    Ostersonntag: feiertage.Ostersonntag(),
-    Pfingstsonntag: feiertage.Pfingstsonntag(),
-    BußUndBettag: feiertage.BußUndBettag()
+    Neujahr: feiertage.Neujahr(2019),
+    HeiligeDreiKoenige: feiertage.HeiligeDreiKoenige(2019),
+    Ostermontag: feiertage.Ostermontag(2019),
+    Pfingstmontag: feiertage.Pfingstmontag(2019),
+    BußUndBettag: feiertage.BußUndBettag(2019)
   }
 });
 
@@ -45,15 +44,15 @@ testdata.push({
   validation: {
     Neujahr: toDate(2020, 1, 1),
     HeiligeDreiKoenige: toDate(2020, 1, 6),
-    Ostersonntag: toDate(2020, 4, 12),
-    Pfingstsonntag: toDate(2020, 5, 31),
+    Ostermontag: toDate(2020, 4, 13),
+    Pfingstmontag: toDate(2020, 6, 1),
     BußUndBettag: toDate(2020, 11, 18)
   },
   test: {
     Neujahr: feiertage.Neujahr(2020),
     HeiligeDreiKoenige: feiertage.HeiligeDreiKoenige(2020),
-    Ostersonntag: feiertage.Ostersonntag(2020),
-    Pfingstsonntag: feiertage.Pfingstsonntag(2020),
+    Ostermontag: feiertage.Ostermontag(2020),
+    Pfingstmontag: feiertage.Pfingstmontag(2020),
     BußUndBettag: feiertage.BußUndBettag(2020)
   }
 });
@@ -62,8 +61,8 @@ testdata.forEach(function(dataset) {
   var keys = [
     'Neujahr',
     'HeiligeDreiKoenige',
-    'Ostersonntag',
-    'Pfingstsonntag',
+    'Ostermontag',
+    'Pfingstmontag',
     'BußUndBettag'
   ];
 
@@ -79,4 +78,9 @@ testdata.forEach(function(dataset) {
   console.log('');
 });
 
-console.log(JSON.stringify(feiertage.asList(2021)));
+var feiertageAll = feiertage.asList(2021);
+console.log('Feiertage 2021 (deutschlandweit): ' + feiertageAll.length);
+var feiertageBY = feiertage.asList(2021, 'BY');
+console.log('Feiertage 2021 (Bayern): ' + feiertageBY.length);
+var feiertageBE = feiertage.asList(2021, 'BE');
+console.log('Feiertage 2021 (Berlin): ' + feiertageBE.length);
