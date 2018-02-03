@@ -1,15 +1,27 @@
 var FeiertageJS = function() {};
+FeiertageJS.prototype.Holidays = require('./model');
 
 FeiertageJS.prototype.year = new Date().getFullYear();
 FeiertageJS.prototype.state = 'DE';
 
+/**
+ * Creates a Date object.
+ * @param {number} day - Day as a number.
+ * @param {number} month - Month as a number (don't substract 1).
+ * @param {number} year - Year as a number.
+ * @returns {object} Date - Returns a Javascript Date object.
+ * */
 FeiertageJS.prototype.createDate = function(day, month, year) {
   year = typeof year !== 'undefined' ? year : this.year;
   return new Date(Date.UTC(year, month - 1, day));
 };
 
-FeiertageJS.prototype.gaussianEaster = function(year, modifier) {
-  modifier = typeof modifier !== 'undefined' ? modifier : 0;
+/**
+ * Calculate the easter date with the Gaussian algoritm.
+ * @param {number} year - Overwrites the current year.
+ * @returns {object} date - Returns an object with the month and day as the property.
+ * */
+FeiertageJS.prototype.gaussianEaster = function(year) {
   var a = year % 19,
     b = year % 4,
     c = year % 7,
@@ -20,8 +32,8 @@ FeiertageJS.prototype.gaussianEaster = function(year, modifier) {
     d = (19 * a + M) % 30,
     N = (4 + k - q) % 7,
     e = (2 * b + 4 * c + 6 * d + N) % 7,
-    Ostern = 22 + d + e;
-  return [Ostern + modifier, 3];
+    easter_date = 22 + d + e;
+  return { day: easter_date, month: 3 };
 };
 
 FeiertageJS.prototype.States = [
@@ -44,6 +56,12 @@ FeiertageJS.prototype.States = [
   'TH' // Thüringen
 ];
 
+/**
+ * Returns the calculated non-business day identified by holidayId.
+ * @param {string} holidayId - The identifier for the holiday.
+ * @param {number} year - Overwrites the current year.
+ * @returns {object} date - The calculated date as a Date object.
+ * */
 FeiertageJS.prototype.getDate = function(holidayId, year) {
   year = typeof year !== 'undefined' ? year : this.year;
 
@@ -55,426 +73,15 @@ FeiertageJS.prototype.getDate = function(holidayId, year) {
     }
   });
 
-  return theHoliday.calc(year);
+  return theHoliday.calc(year, this.gaussianEaster(year));
 };
 
-FeiertageJS.prototype.Holidays = [
-  {
-    id: 'neujahr',
-    type: 'static',
-    label: 'Neujahr',
-    calc: function(year) {
-      return FeiertageJS.prototype.createDate(1, 1, year);
-    },
-    valid: [
-      'DE',
-      'BW',
-      'BY',
-      'BE',
-      'BB',
-      'HB',
-      'HH',
-      'HE',
-      'MV',
-      'NI',
-      'NW',
-      'RP',
-      'SL',
-      'SN',
-      'ST',
-      'SH',
-      'TH'
-    ]
-  },
-  {
-    id: 'heiligedreikoenige',
-    type: 'static',
-    label: 'Hl. Drei Könige',
-    calc: function(year) {
-      return FeiertageJS.prototype.createDate(6, 1, year);
-    },
-    valid: ['DE', 'BW', 'BY', 'ST']
-  },
-  {
-    id: 'karfreitag',
-    type: 'variable',
-    label: 'Karfreitag',
-    calc: function(year) {
-      var date = FeiertageJS.prototype.gaussianEaster(year, -2);
-      return FeiertageJS.prototype.createDate(date[0], date[1], year);
-    },
-    valid: [
-      'DE',
-      'BW',
-      'BY',
-      'BE',
-      'BB',
-      'HB',
-      'HH',
-      'HE',
-      'MV',
-      'NI',
-      'NW',
-      'RP',
-      'SL',
-      'SN',
-      'ST',
-      'SH',
-      'TH'
-    ]
-  },
-  {
-    id: 'ostersonntag',
-    type: 'variable',
-    label: 'Ostersonntag',
-    calc: function(year) {
-      var date = FeiertageJS.prototype.gaussianEaster(year);
-      return FeiertageJS.prototype.createDate(date[0], date[1], year);
-    },
-    valid: [
-      'DE',
-      'BW',
-      'BY',
-      'BE',
-      'BB',
-      'HB',
-      'HH',
-      'HE',
-      'MV',
-      'NI',
-      'NW',
-      'RP',
-      'SL',
-      'SN',
-      'ST',
-      'SH',
-      'TH'
-    ]
-  },
-  {
-    id: 'ostermontag',
-    type: 'variable',
-    label: 'Ostermontag',
-    calc: function(year) {
-      var date = FeiertageJS.prototype.gaussianEaster(year, 1);
-      return FeiertageJS.prototype.createDate(date[0], date[1], year);
-    },
-    valid: [
-      'DE',
-      'BW',
-      'BY',
-      'BE',
-      'BB',
-      'HB',
-      'HH',
-      'HE',
-      'MV',
-      'NI',
-      'NW',
-      'RP',
-      'SL',
-      'SN',
-      'ST',
-      'SH',
-      'TH'
-    ]
-  },
-  {
-    id: 'tagderarbeit',
-    type: 'static',
-    label: 'Tag der Arbeit',
-    calc: function(year) {
-      return FeiertageJS.prototype.createDate(1, 5, year);
-    },
-    valid: [
-      'DE',
-      'BW',
-      'BY',
-      'BE',
-      'BB',
-      'HB',
-      'HH',
-      'HE',
-      'MV',
-      'NI',
-      'NW',
-      'RP',
-      'SL',
-      'SN',
-      'ST',
-      'SH',
-      'TH'
-    ]
-  },
-  {
-    id: 'christihimmelfahrt',
-    type: 'variable',
-    label: 'Christi Himmelfahrt',
-    calc: function(year) {
-      var date = FeiertageJS.prototype.gaussianEaster(year, 39);
-      return FeiertageJS.prototype.createDate(date[0], date[1], year);
-    },
-    valid: [
-      'DE',
-      'BW',
-      'BY',
-      'BE',
-      'BB',
-      'HB',
-      'HH',
-      'HE',
-      'MV',
-      'NI',
-      'NW',
-      'RP',
-      'SL',
-      'SN',
-      'ST',
-      'SH',
-      'TH'
-    ]
-  },
-  {
-    id: 'pfingstsonntag',
-    type: 'variable',
-    label: 'Pfingstsonntag',
-    calc: function(year) {
-      var date = FeiertageJS.prototype.gaussianEaster(year, 49);
-      return FeiertageJS.prototype.createDate(date[0], date[1], year);
-    },
-    valid: [
-      'DE',
-      'BW',
-      'BY',
-      'BE',
-      'BB',
-      'HB',
-      'HH',
-      'HE',
-      'MV',
-      'NI',
-      'NW',
-      'RP',
-      'SL',
-      'SN',
-      'ST',
-      'SH',
-      'TH'
-    ]
-  },
-  {
-    id: 'pfingstmontag',
-    type: 'variable',
-    label: 'Pfingstmontag',
-    calc: function(year) {
-      var date = FeiertageJS.prototype.gaussianEaster(year, 50);
-      return FeiertageJS.prototype.createDate(date[0], date[1], year);
-    },
-    valid: [
-      'DE',
-      'BW',
-      'BY',
-      'BE',
-      'BB',
-      'HB',
-      'HH',
-      'HE',
-      'MV',
-      'NI',
-      'NW',
-      'RP',
-      'SL',
-      'SN',
-      'ST',
-      'SH',
-      'TH'
-    ]
-  },
-  {
-    id: 'fronleichnam',
-    type: 'variable',
-    label: 'Fronleichnam',
-    calc: function(year) {
-      var date = FeiertageJS.prototype.gaussianEaster(year, 60);
-      return FeiertageJS.prototype.createDate(date[0], date[1], year);
-    },
-    valid: ['DE', 'BW', 'BY', 'HE', 'NW', 'RP', 'SL', 'TH']
-  },
-  {
-    id: 'mariahimmelfahrt',
-    type: 'static',
-    label: 'Mariä Himmelfahrt',
-    calc: function(year) {
-      return FeiertageJS.prototype.createDate(15, 8, year);
-    },
-    valid: ['DE', 'BY', 'SL']
-  },
-  {
-    id: 'tagderdeutscheneinheit',
-    type: 'static',
-    label: 'Tag der dt. Einheit',
-    calc: function(year) {
-      return FeiertageJS.prototype.createDate(3, 10, year);
-    },
-    valid: [
-      'DE',
-      'BW',
-      'BY',
-      'BE',
-      'BB',
-      'HB',
-      'HH',
-      'HE',
-      'MV',
-      'NI',
-      'NW',
-      'RP',
-      'SL',
-      'SN',
-      'ST',
-      'SH',
-      'TH'
-    ]
-  },
-  {
-    id: 'reformationstag',
-    type: 'static',
-    label: 'Reformationstag',
-    calc: function(year) {
-      return FeiertageJS.prototype.createDate(31, 10, year);
-    },
-    valid: ['DE', 'BB', 'MV', 'SN', 'ST', 'TH']
-  },
-  {
-    id: 'allerheiligen',
-    type: 'static',
-    label: 'Allerheiligen',
-    calc: function(year) {
-      return FeiertageJS.prototype.createDate(1, 11, year);
-    },
-    valid: ['DE', 'BW', 'BY', 'NW', 'RP', 'SL']
-  },
-  {
-    id: 'bußundbettag',
-    type: 'variable',
-    label: 'Buß- und Bettag',
-    calc: function(year) {
-      return new Date(
-        Date.UTC(year, 11, 25 - new Date(Date.UTC(year, 11, 25)).getDay() - 32)
-      );
-    },
-    valid: ['DE', 'SN']
-  },
-  {
-    id: 'heiligabend',
-    type: 'static',
-    label: 'Heiligabend',
-    calc: function(year) {
-      return FeiertageJS.prototype.createDate(24, 12, year);
-    },
-    valid: [
-      'DE',
-      'BW',
-      'BY',
-      'BE',
-      'BB',
-      'HB',
-      'HH',
-      'HE',
-      'MV',
-      'NI',
-      'NW',
-      'RP',
-      'SL',
-      'SN',
-      'ST',
-      'SH',
-      'TH'
-    ]
-  },
-  {
-    id: 'ersterweihnachtsfeiertag',
-    type: 'static',
-    label: '1. Weihnachtsfeiertag',
-    calc: function(year) {
-      return FeiertageJS.prototype.createDate(25, 12, year);
-    },
-    valid: [
-      'DE',
-      'BW',
-      'BY',
-      'BE',
-      'BB',
-      'HB',
-      'HH',
-      'HE',
-      'MV',
-      'NI',
-      'NW',
-      'RP',
-      'SL',
-      'SN',
-      'ST',
-      'SH',
-      'TH'
-    ]
-  },
-  {
-    id: 'zweiterweihnachtsfeiertag',
-    type: 'static',
-    label: '2. Weihnachtsfeiertag',
-    calc: function(year) {
-      return FeiertageJS.prototype.createDate(26, 12, year);
-    },
-    valid: [
-      'DE',
-      'BW',
-      'BY',
-      'BE',
-      'BB',
-      'HB',
-      'HH',
-      'HE',
-      'MV',
-      'NI',
-      'NW',
-      'RP',
-      'SL',
-      'SN',
-      'ST',
-      'SH',
-      'TH'
-    ]
-  },
-  {
-    id: 'silvester',
-    type: 'static',
-    label: 'Silvester',
-    calc: function(year) {
-      return FeiertageJS.prototype.createDate(31, 12, year);
-    },
-    valid: [
-      'DE',
-      'BW',
-      'BY',
-      'BE',
-      'BB',
-      'HB',
-      'HH',
-      'HE',
-      'MV',
-      'NI',
-      'NW',
-      'RP',
-      'SL',
-      'SN',
-      'ST',
-      'SH',
-      'TH'
-    ]
-  }
-];
-
+/**
+ * Creates a list the non-business days for all or a specific state.
+ * @param {number} year - Overwrites the current year.
+ * @param {string} state - An identifier for the state.
+ * @return {array} dates - The list of the calculated non-business days.
+ * */
 FeiertageJS.prototype.asList = function(year, state) {
   year = typeof year !== 'undefined' ? year : this.year;
   state =
@@ -483,6 +90,7 @@ FeiertageJS.prototype.asList = function(year, state) {
       ? state.toUpperCase()
       : this.state;
 
+  var easter_date = this.gaussianEaster(year);
   var dates = [];
 
   this.Holidays.forEach(function(holiday) {
@@ -490,13 +98,15 @@ FeiertageJS.prototype.asList = function(year, state) {
       dates.push({
         id: holiday.id,
         label: holiday.label,
-        date: holiday.calc(year)
+        date: holiday.calc(year, easter_date)
       });
     }
   });
 
   return dates;
 };
+
+/* Sugar for the user. */
 
 FeiertageJS.prototype.Neujahr = function(year) {
   return FeiertageJS.prototype.getDate('neujahr', year);
