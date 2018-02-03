@@ -9,9 +9,7 @@ Simply download the package or install it from npm with `npm install feiertage`.
 ```js
 var feiertage = require('feiertage');
 
-// non-business days for the current year
-// returns a Date object
-// full list of all non-business days
+// full list of all functions to retrieve the date for a specific non-business day of the current year
 feiertage.Neujahr();
 feiertage.HeiligeDreiKoenige();
 feiertage.Karfreitag();
@@ -32,20 +30,48 @@ feiertage.ErsterWeihnachtsfeiertag();
 feiertage.ZweiterWeihnachtsfeiertag();
 feiertage.Silvester();
 
-// non-business days for the current year as an object
-// e.g. list.Neujahr.label
-//      list.Neujahr.date
+// every function accepts a year as a parameter
+feiertage.Neujahr(2019);
+feiertage.HeiligeDreiKoenige(2020);
+...
+
+// non-business days for the current year as a list of objects
+// every objects has the properties id, label, date
 feiertage.asList();
 
-// non-business days for a specific year as an object
+// non-business days for a given year as a list of objects
+feiertage.asList(2020);
 feiertage.asList(2021);
 
-// sets the year once for every subsequent calculation
-feiertage.setYear(2019);
-feiertage.Neujahr();
-feiertage.HeiligeDreiKoenige();
-
-// explicitly set the year for every calculation
-feiertage.Neujahr(2020);
-feiertage.HeiligeDreiKoenige(2020);
+// asList also accepts a german state code, like BY, BE, SH or TH, so it returns only non-business days valid for these german states
+feiertage.asList(2020, 'BY');
+feiertage.asList(2021, 'BE');
 ```
+
+A list of the supported german state codes. DE exists to specify that all known non-business days should be included.
+
+* DE = Deutschland
+* BW = Baden-Württemberg
+* BY = Bayern
+* BE = Berlin
+* BB = Brandenburg
+* HB = Bremen
+* HH = Hamburg
+* HE = Hessen
+* NI = Niedersachsen
+* MV = Mecklenburg-Vorpommern
+* NW = Nordrhein-Westfalen
+* RP = Rheinland-Pfalz
+* SL = Saarland
+* SN = Sachsen
+* ST = Sachsen-Anhalt
+* SH = Schleswig-Holstein
+* TH = Thüringen
+
+## Changelog
+
+### 1.1.0
+
+* setYear() was removed from the API
+* asList() now accepts a state code as second parameter, e.g. BY, BE, SH or TH
+* asList() now returns a list of objects instead of an object
