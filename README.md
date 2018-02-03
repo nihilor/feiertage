@@ -72,6 +72,6 @@ A list of the supported german state codes. DE exists to specify that all known 
 
 ### 1.1.0
 
-* setYear() was removed from the API
-* asList() now accepts a state code as second parameter, e.g. BY, BE, SH or TH
-* asList() now returns a list of objects instead of an object
+* `setYear()` was removed from the API
+* `asList()` now accepts a state code as second parameter, e.g. BY, BE, SH or TH
+* `asList()` now returns a list of objects instead of an object
