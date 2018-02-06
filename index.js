@@ -17,9 +17,9 @@ FeiertageJS.prototype.createDate = function(day, month, year) {
 };
 
 /**
- * Calculate the easter date with the Gaussian algoritm.
+ * Calculate the easter date with Gaussian's formula.
  * @param {number} year - Overwrites the current year.
- * @returns {object} date - Returns an object with the month and day as the property.
+ * @returns {object} date - Returns an object with month and day as properties.
  * */
 FeiertageJS.prototype.gaussianEaster = function(year) {
   var a = year % 19,
@@ -33,7 +33,10 @@ FeiertageJS.prototype.gaussianEaster = function(year) {
     N = (4 + k - q) % 7,
     e = (2 * b + 4 * c + 6 * d + N) % 7,
     easter_date = 22 + d + e;
-  return { day: easter_date, month: 3 };
+  return {
+    day: easter_date,
+    month: 3
+  };
 };
 
 FeiertageJS.prototype.States = [
@@ -89,13 +92,26 @@ FeiertageJS.prototype.asList = function(year, state) {
     FeiertageJS.prototype.States.indexOf(state.toUpperCase()) > -1
       ? state.toUpperCase()
       : this.state;
-
   var easter_date = this.gaussianEaster(year);
-  var dates = [];
+  var days = [];
 
   this.Holidays.forEach(function(holiday) {
-    if (holiday.valid.indexOf(state) > -1) {
-      dates.push({
+    if (holiday.type != 'full') return;
+
+    var generallyValid = false;
+    var exceptionallyValid = false;
+
+    generallyValid = holiday.valid.indexOf(state) > -1 ? true : generallyValid;
+    if (
+      holiday.hasOwnProperty('exceptions') &&
+      holiday.exceptions.hasOwnProperty(year) &&
+      holiday.exceptions[year].indexOf(state.toUpperCase()) > -1
+    ) {
+      exceptionallyValid = true;
+    }
+
+    if (generallyValid || exceptionallyValid) {
+      days.push({
         id: holiday.id,
         label: holiday.label,
         date: holiday.calc(year, easter_date)
@@ -103,7 +119,34 @@ FeiertageJS.prototype.asList = function(year, state) {
     }
   });
 
-  return dates;
+  return days;
+};
+
+/**
+ * Creates a list of the non-business days falling on monday to friday.
+ * @param {number} year - Overwrites the current year.
+ * @param {string} state - An identifier for the state.
+ * @return {array} dates - The list of the non-business days on workdays.
+ * */
+FeiertageJS.prototype.asListOfWorkdays = function(year, state) {
+  year = typeof year !== 'undefined' ? year : this.year;
+  state =
+    typeof state !== 'undefined' &&
+    FeiertageJS.prototype.States.indexOf(state.toUpperCase()) > -1
+      ? state.toUpperCase()
+      : this.state;
+
+  var holidays = this.asList(year, state);
+  var workdays = [];
+
+  holidays.forEach(function(holiday) {
+    var weekday = holiday.date.getDay();
+    if (weekday > 0 && weekday < 6) {
+      workdays.push(holiday);
+    }
+  });
+
+  return workdays;
 };
 
 /* Sugar for the user. */

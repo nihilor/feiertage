@@ -67,20 +67,38 @@ testdata.forEach(function(dataset) {
   ];
 
   keys.forEach(function(key) {
-    console.log('--- ' + key);
-    console.log('    Validation: ' + JSON.stringify(dataset.validation[key]));
-    console.log('    Test: ' + JSON.stringify(dataset.test[key]));
+    console.log('--- ' + key + ': ' + JSON.stringify(dataset.validation[key]));
     var passed =
       Date.parse(dataset.validation[key]) == Date.parse(dataset.test[key]);
-    console.log('    Passed: ' + JSON.stringify(passed));
+    if (passed) {
+      console.log('    OK');
+    } else {
+      console.error('    ERROR: ' + JSON.stringify(dataset.test[key]));
+    }
   }, dataset);
 
   console.log('');
 });
 
-var feiertageAll = feiertage.asList(2021);
-console.log('Feiertage 2021 (deutschlandweit): ' + feiertageAll.length);
-var feiertageBY = feiertage.asList(2021, 'BY');
-console.log('Feiertage 2021 (Bayern): ' + feiertageBY.length);
-var feiertageBE = feiertage.asList(2021, 'BE');
-console.log('Feiertage 2021 (Berlin): ' + feiertageBE.length);
+var feiertageDE2021 = feiertage.asList(2021);
+console.log('Feiertage 2021 (deutschlandweit): ' + feiertageDE2021.length);
+
+var feiertageBY2017 = feiertage.asList(2017, 'BY');
+console.log('Feiertage 2017 (Bayern): ' + feiertageBY2017.length);
+
+var feiertageBY2021 = feiertage.asList(2021, 'BY');
+console.log('Feiertage 2021 (Bayern): ' + feiertageBY2021.length);
+
+var feiertageBE2017 = feiertage.asList(2017, 'BE');
+console.log('Feiertage 2017 (Berlin): ' + feiertageBE2017.length);
+
+var feiertageBE2021 = feiertage.asList(2021, 'BE');
+console.log('Feiertage 2021 (Berlin): ' + feiertageBE2021.length);
+
+var feiertageBY2016 = feiertage.asList(2016, 'BY');
+console.log('Feiertage 2016 (Bayern): ' + feiertageBY2016.length);
+
+var werktageBY2016 = feiertage.asListOfWorkdays(2016, 'BY');
+console.log('Feiertage an Werktagen 2016 (Bayern): ' + werktageBY2016.length);
+
+console.log(JSON.stringify(werktageBY2016, null, 2));
