@@ -46,6 +46,9 @@ feiertage.asList(2021);
 // asList also accepts a german state code, like BY, BE, SH or TH, so it returns only non-business days valid for these german states
 feiertage.asList(2020, 'BY');
 feiertage.asList(2021, 'BE');
+
+// returns only non-business days falling on monday to friday
+feiertage.asListOfWorkdays(2016, 'BY');
 ```
 
 A list of the supported german state codes. DE exists to specify that all known non-business days should be included.
@@ -69,6 +72,10 @@ A list of the supported german state codes. DE exists to specify that all known 
 * TH = Thüringen
 
 ## Changelog
+
+### 1.1.1
+
+* `asListofWorkdays()` (new) returns only those non-business days, that fall on monday to friday
 
 ### 1.1.0
 
