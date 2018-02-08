@@ -73,6 +73,10 @@ A list of the supported german state codes. DE exists to specify that all known 
 
 ## Changelog
 
+### 1.1.2
+
+* The calculation of easter sunday is now based on the corrected Gauss formula by Lichtenberg
+
 ### 1.1.1
 
 * `asListofWorkdays()` (new) returns only those non-business days, that fall on monday to friday

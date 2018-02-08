@@ -19,7 +19,7 @@ FeiertageJS.prototype.createDate = function(day, month, year) {
 /**
  * Calculate the easter date with Gaussian's formula.
  * @param {number} year - Overwrites the current year.
- * @returns {object} date - Returns an object with month and day as properties.
+ * @returns {object} easter_date - Returns an object with month = 3 and the days as integer possibly bigger than 31.
  * */
 FeiertageJS.prototype.gaussianEaster = function(year) {
   var a = year % 19,
@@ -35,6 +35,28 @@ FeiertageJS.prototype.gaussianEaster = function(year) {
     easter_date = 22 + d + e;
   return {
     day: easter_date,
+    month: 3
+  };
+};
+
+/**
+ * Calculate the easter date with Gaussian's formula corrected by Lichtenberg.
+ * @param {number} year - Overwrites the current year.
+ * @returns {object} easter_date - Returns an object with month = 3 and the days as integer, possibly bigger than 31.
+ * */
+FeiertageJS.prototype.gaussianEasterByLichterberg = function(year) {
+  var K = Math.floor(year / 100),
+    M = 15 + Math.floor((3 * K + 3) / 4) - Math.floor((8 * K + 13) / 25),
+    S = 2 - Math.floor((3 * K + 3) / 4),
+    A = year % 19,
+    D = (19 * A + M) % 30,
+    R = Math.floor((D + Math.floor(A / 11)) / 29),
+    OG = 21 + D - R,
+    SZ = 7 - (year + Math.floor(year / 4) + S) % 7,
+    OE = 7 - (OG - SZ) % 7,
+    OS = OG + OE;
+  return {
+    day: OS,
     month: 3
   };
 };
@@ -63,7 +85,7 @@ FeiertageJS.prototype.States = [
  * Returns the calculated non-business day identified by holidayId.
  * @param {string} holidayId - The identifier for the holiday.
  * @param {number} year - Overwrites the current year.
- * @returns {object} date - The calculated date as a Date object.
+ * @returns {object} Date - The calculated date as a Date object.
  * */
 FeiertageJS.prototype.getDate = function(holidayId, year) {
   year = typeof year !== 'undefined' ? year : this.year;
@@ -76,7 +98,7 @@ FeiertageJS.prototype.getDate = function(holidayId, year) {
     }
   });
 
-  return theHoliday.calc(year, this.gaussianEaster(year));
+  return theHoliday.calc(year, this.gaussianEasterByLichterberg(year));
 };
 
 /**
@@ -92,7 +114,8 @@ FeiertageJS.prototype.asList = function(year, state) {
     FeiertageJS.prototype.States.indexOf(state.toUpperCase()) > -1
       ? state.toUpperCase()
       : this.state;
-  var easter_date = this.gaussianEaster(year);
+
+  var easter_date = this.gaussianEasterByLichterberg(year);
   var days = [];
 
   this.Holidays.forEach(function(holiday) {
