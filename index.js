@@ -78,7 +78,11 @@ FeiertageJS.prototype.States = [
   'SN', // Sachsen
   'ST', // Sachsen-Anhalt
   'SH', // Schleswig-Holstein
-  'TH' // Thüringen
+  'TH', // Thüringen
+  'BY-FF', // Bayern, Friedensfest, Stadt Augsburg
+  'BY-MH', // Bayern, überwiegend katholische Bevölkerung
+  'SN-FL', // Sachsen, Bautzen
+  'TH-FL' // Thüringen, Eichsfeld, Unstrut-Hainich, Wartburgkreis
 ];
 
 /**
