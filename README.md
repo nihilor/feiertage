@@ -2,6 +2,8 @@
 
 Tiny, simple and pure module to calculate the german non-business days.
 
+[![NPM](https://nodei.co/npm/feiertage.png)](https://nodei.co/npm/feiertage/)
+
 ## How To Use
 
 Simply download the package or install it from npm with `npm install feiertage`.
@@ -51,27 +53,37 @@ feiertage.asList(2021, 'BE');
 feiertage.asListOfWorkdays(2016, 'BY');
 ```
 
-A list of the supported german state codes. DE exists to specify that all known non-business days should be included.
+A list of the supported german state codes. There are five additional codes to specify special regulations for Friedensfest, Mariä Himmelfahrt and Fronleichnam. The code DE summarizes all german non-business days.
 
-* DE = Deutschland
-* BW = Baden-Württemberg
-* BY = Bayern
-* BE = Berlin
-* BB = Brandenburg
-* HB = Bremen
-* HH = Hamburg
-* HE = Hessen
-* NI = Niedersachsen
-* MV = Mecklenburg-Vorpommern
-* NW = Nordrhein-Westfalen
-* RP = Rheinland-Pfalz
-* SL = Saarland
-* SN = Sachsen
-* ST = Sachsen-Anhalt
-* SH = Schleswig-Holstein
-* TH = Thüringen
+| Code  | Description                                                                            |
+| ----- | -------------------------------------------------------------------------------------- |
+| DE    | Deutschland (all known non-business days)                                              |
+| BW    | Baden-Württemberg                                                                      |
+| BY    | Bayern                                                                                 |
+| BE    | Berlin                                                                                 |
+| BB    | Brandenburg                                                                            |
+| HB    | Bremen                                                                                 |
+| HH    | Hamburg                                                                                |
+| HE    | Hessen                                                                                 |
+| NI    | Niedersachsen                                                                          |
+| MV    | Mecklenburg-Vorpommern                                                                 |
+| NW    | Nordrhein-Westfalen                                                                    |
+| RP    | Rheinland-Pfalz                                                                        |
+| SL    | Saarland                                                                               |
+| SN    | Sachsen                                                                                |
+| ST    | Sachsen-Anhalt                                                                         |
+| SH    | Schleswig-Holstein                                                                     |
+| TH    | Thüringen                                                                              |
+| BY-FF | Bayern, Friedensfest, Augsburg only                                                    |
+| BY-MH | Bayern, Mariä Himmelfahrt, predominantly catholic population                           |
+| SN-FL | Sachsen, Fronleichnam, some communities in Bautzen                                     |
+| TH-FL | Thüringen, Fronleichnam, some communities in Eichsfeld, Unstrut-Hainich, Wartburgkreis |
 
 ## Changelog
+
+### 1.2.0
+
+* Added special state codes for `BY-FF`, `BY-MH`, `SN-FL` and `TH-FL` covering the special rules for non-business days, that are only valid in some communities, like Friedensfest, Mariä-Himmelfahrt and Fronleichnam.
 
 ### 1.1.2
 
