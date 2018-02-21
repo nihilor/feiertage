@@ -150,6 +150,23 @@ FeiertageJS.prototype.asList = function(year, state) {
 };
 
 /**
+ * Tells by response of the object or false, if the given date is a holiday in the specific state.
+ * @param {Date} date - The date to check, current date if left empty.
+ * @param {string} state - An identifier for the state, DE if left empty.
+ * */
+FeiertageJS.prototype.isHoliday = function(date, state) {
+  date = data || new Date();
+  var list = this.asList(date.getFullYear(), state);
+  for(var i = 0; i < list.length; i++){
+    var item = list[i];
+    if(item.date.getMonth() === date.getMonth() && item.date.getDate() === date.getDate()){
+      return item;
+    }
+  }
+  return false;
+};
+
+/**
  * Creates a list of the non-business days falling on monday to friday.
  * @param {number} year - Overwrites the current year.
  * @param {string} state - An identifier for the state.
